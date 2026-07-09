@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marley Döner - Premium QR Menü</title>
+    
+    <style>
+        /* Modern Renk Paleti ve Değişkenler */
+        :root {
+            --primary-red: #E63946; /* Daha modern ve iştah açıcı bir kırmızı */
+            --dark-red: #9B2226;
+            --bg-dark: #0A0A0A; /* Tam siyah yerine çok koyu antrasit/siyah */
+            --surface: #161616; /* Kart arka planı */
+            --surface-hover: #1E1E1E;
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.6);
+            --shadow-red: 0 8px 24px rgba(230, 57, 70, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif; /* Modern, temiz font ailesi */
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 90px;
+        }
+
+        /* Glassmorphism Header (Cam Efektli Üst Kısım) */
+        header {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px); /* Arkasını hafif buğulu gösterir */
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(230, 57, 70, 0.3));
+        }
+
+        /* Modern Promosyon Banner */
+        .promo-banner {
+            background: linear-gradient(90deg, var(--dark-red) 0%, var(--primary-red) 100%);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        }
+
+        /* Ana Konteyner */
+        .menu-container {
+            max-width: 1200px; /* PC'de geniş, mobilde daralır */
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Kategori Başlıkları */
+        .category {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary-red) 0%, transparent 100%);
+            opacity: 0.5;
+        }
+
+        /* CSS Grid ile Kusursuz PC/Mobil Uyumu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Modern Menü Kartları */
+        .menu-card {
+            background-color: var(--surface);
+            border-radius: 16px; /* Daha yumuşak köşeler */
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-red);
+            border-color: rgba(230, 57, 70, 0.4);
+            background-color: var(--surface-hover);
+        }
+
+        /* Ürün Resimleri */
+        .menu-card-img {
+            width: 100%;
+            height: 200px; /* Her resim standart boyda görünür */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Resmi sündürmeden keserek sığdırır */
+            transition: transform 0.5s ease;
+        }
+
+        .menu-card:hover .menu-card-img img {
+            transform: scale(1.08); /* Üzerine gelince resim hafif yakınlaşır */
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #FFD166;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        /* Kart İçeriği (Yazılar ve Fiyatlar) */
+        .menu-card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .menu-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .menu-card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        /* Modern Fiyat Hapları (Pill Design) */
+        .price-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .price-pill {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px; /* Hap görünümü */
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 120px;
+            transition: border-color 0.3s;
+        }
+
+        .menu-card:hover .price-pill {
+            border-color: rgba(230, 57, 70, 0.3);
+        }
+
+        .price-pill .gram {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .price-pill .price {
+            color: var(--primary-red);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        /* Alt Navigasyon (Mobil App Hissi - Glassmorphism) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(22, 22, 22, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .bottom-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .bottom-nav a:first-child {
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .bottom-nav a:hover {
+            background: rgba(230, 57, 70, 0.1);
+            color: var(--primary-red);
+        }
+
+        /* Ekran Boyutuna Göre Ayarlamalar */
+        @media (max-width: 400px) {
+            .menu-grid {
+                grid-template-columns: 1fr; /* Çok küçük ekranlarda tek sütun */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Kısım -->
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/IMG_0969.jpg" alt="Marley Döner">
+            </a>
+        </div>
+    </header>
+
+    <div class="promo-banner">
+        🔥 SADECE 80 TL FARKLA MENÜ YAP! 🔥
+    </div>
+
+    <div class="menu-container">
+
+        <!-- KATEGORİ 1 -->
+        <div class="category">
+            <h2 class="category-title">Dürümler & Zurnalar</h2>
+            
+            <div class="menu-grid">
+                <!-- Kart 1 -->
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <img src="images/35-durum.jpg" alt="35 cm Dürüm">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">35 cm Dürüm</h3>
+                        <p class="menu-card-desc">Özel lavaşında, bol malzemeli gerçek ateş lezzeti.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">90 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">120 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 2 -->
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <img src="images/35-durum-kasarli.jpg" alt="35 cm Dürüm Kaşarlı">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">35 cm Dürüm Kaşarlı</h3>
+                        <p class="menu-card-desc">Dönerin sıcağında eriyen enfes kaşar peyniriyle.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">120 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">150 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 3 -->
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <img src="images/zurna-durum.jpg" alt="70 cm Zurna Dürüm">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">70 cm Zurna Dürüm</h3>
+                        <p class="menu-card-desc">Doymak bilmeyenlere, ekstra uzun efsane lezzet.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">180 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">240 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 4 -->
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <img src="images/zurna-kasarli.jpg" alt="70 cm Zurna Kaşarlı">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">70 cm Zurna Kaşarlı</h3>
+                        <p class="menu-card-desc">70 cm boyunca uzayan erimiş kaşar şöleni.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">240 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">300 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KATEGORİ 2 -->
+        <div class="category">
+            <h2 class="category-title">Hatay Dürümler</h2>
+            
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <img src="images/hatay-small.jpg" alt="Small Hatay">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Small Hatay</h3>
+                        <p class="menu-card-desc">Özel Hatay sosu ile harmanlanmış yöresel lezzet.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">120 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <img src="images/hatay-medium.jpg" alt="Medium Hatay">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Medium Hatay</h3>
+                        <p class="menu-card-desc">Daha doyurucu gramajıyla tam bir ziyafet.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">150 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img">
+                        <span class="new-badge">YENİ</span>
+                        <img src="images/hatay-big.jpg" alt="Big Hatay">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Big Hatay</h3>
+                        <p class="menu-card-desc">Hatay lezzetine doyamayanlar için ekstra büyük.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">140g</span> <span class="price">180 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KATEGORİ 3 -->
+        <div class="category">
+            <h2 class="category-title" style="color: var(--primary-red);">Özel Lezzetler</h2>
+            
+            <div class="menu-grid">
+                <div class="menu-card" style="border: 1px solid var(--primary-red);">
+                    <div class="menu-card-img">
+                        <img src="images/marley-ozel.jpg" alt="Marley Özel Dürüm">
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Marley Özel Dürüm</h3>
+                        <p class="menu-card-desc"><strong>Yanında:</strong> Patates Kızartması, Ayran, Ezme ve Sucuk ile servis edilen imza menümüz.</p>
+                        <div class="price-options">
+                            <div class="price-pill" style="justify-content: center;"><span class="price">200 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KATEGORİ 4 -->
+        <div class="category">
+            <h2 class="category-title">Ekmek Arası & Porsiyon</h2>
+            
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/tombik.jpg" alt="Tombik"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Tombik</h3>
+                        <p class="menu-card-desc">Yumuşacık pide ekmeği arasında.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">90 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">120 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/patso.jpg" alt="Patso"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Patso</h3>
+                        <p class="menu-card-desc">Bol ketçap ve mayonezli klasik lezzet.</p>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/yarim-ekmek.jpg" alt="Yarım Ekmek"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Yarım Ekmek</h3>
+                        <p class="menu-card-desc">Çıtır ekmek arasında vazgeçilmez tat.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">80 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">100 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/tam-ekmek.jpg" alt="Tam Ekmek"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Tam Ekmek</h3>
+                        <p class="menu-card-desc">Açlığını tam anlamıyla bastırmak isteyenlere.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">90 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">120 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/ufo.jpg" alt="Ufo"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Ufo</h3>
+                        <p class="menu-card-desc">Yuvarlak özel ekmeğinde eşsiz sunum.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">80 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">90 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/pilavustu.jpg" alt="Pilav Üstü Tavuk Döner"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">Pilav Üstü Tavuk Döner</h3>
+                        <p class="menu-card-desc">Tane tane dökülen pilavla buluşan lezzet.</p>
+                        <div class="price-options">
+                            <div class="price-pill"><span class="gram">100g</span> <span class="price">220 TL</span></div>
+                            <div class="price-pill"><span class="gram">120g</span> <span class="price">260 TL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-img"><img src="images/iskender.jpg" alt="İskender"></div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">İskender</h3>
+                        <p class="menu-card-desc">Özel tereyağlı, pideli ve yoğurtlu nefis sunum.</p>
+                        <div class="price-options">
+                            <div class="price-pill" style="justify-content: center;"><span class="price" style="color:#FFD166;">Fiyat Sorunuz</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Yüzen Mobil Navigasyon Barı (Modern Floating Bar) -->
+    <div class="bottom-nav">
+        <a href="index.html">🏠 Ana Sayfa</a>
+        <a href="tel:+905413666341">📞 Siparişe Geç</a>
+    </div>
+
+</body>
+</html>

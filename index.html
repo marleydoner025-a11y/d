@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Etiketleri -->
+    <title>Marley Döner | Darıca'nın Efsane Döneri - Zurna & Hatay Dürüm</title>
+    <meta name="description" content="Kocaeli Darıca'da gerçek döner lezzeti Marley Döner'de! 70 cm Zurna, Hatay Dürüm ve Marley Özel Dürüm seçenekleriyle gece 00:00'a kadar hizmetinizdeyiz. Açık hava alanımız mevcuttur.">
+    <meta name="keywords" content="Marley Döner, Darıca döner, Kocaeli döner, zurna dürüm darıca, hatay dürüm, marley özel dürüm, paket servis döner">
+    <meta name="author" content="Marley Döner">
+    <link rel="canonical" href="https://marleydoner.com.tr/">
+    
+    <!-- Yapılandırılmış Veri (Schema.org) - Local SEO için Kusursuz Yapı -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Marley Döner",
+      "image": "https://marleydoner.com.tr/images/IMG_0969.jpg",
+      "@id": "https://marleydoner.com.tr/",
+      "url": "https://marleydoner.com.tr/",
+      "telephone": "+905413666341",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Battal Gazi Caddesi 100-104 Yakınında",
+        "addressLocality": "Darıca",
+        "addressRegion": "Kocaeli",
+        "postalCode": "41700",
+        "addressCountry": "TR"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "10:00",
+        "closes": "00:00"
+      },
+      "servesCuisine": "Turkish, Döner",
+      "priceRange": "₺₺",
+      "amenityFeature": {
+        "@type": "LocationFeatureSpecification",
+        "name": "Açık hava bölümü var",
+        "value": true
+      }
+    }
+    </script>
+
+    <!-- Stil Dosyaları (Siyah & Kırmızı Tema) -->
+    <style>
+        :root {
+            --primary-red: #D32F2F; /* Canlı Kırmızı */
+            --dark-red: #B71C1C;
+            --bg-black: #121212; /* Koyu Siyah Zemin */
+            --surface-black: #1E1E1E; /* Kartlar için hafif açık siyah */
+            --text-light: #F5F5F5;
+            --text-gray: #B0B0B0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Header & Nav */
+        header {
+            background-color: #000000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-red);
+        }
+
+        .logo img {
+            height: 60px; /* IMG_0969.jpg buraya gelecek */
+            object-fit: contain;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(18, 18, 18, 1)), url('images/hero-bg.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: var(--primary-red);
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-red);
+            transform: scale(1.05);
+        }
+
+        /* Öne Çıkan Dönerler */
+        .featured {
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .featured h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--primary-red);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: var(--surface-black);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 350px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-red);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: var(--primary-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Hızlı Ara Butonu (Floating Action Button) */
+        .fab-call {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366; /* WhatsApp yeşili veya Kırmızı yapılabilir, şimdilik dikkat çekici yeşil/kırmızı */
+            background-color: var(--primary-red);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5);
+            z-index: 9999;
+            transition: transform 0.3s;
+        }
+
+        .fab-call:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 40px 5% 20px;
+            border-top: 2px solid var(--primary-red);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-col h4 {
+            color: var(--primary-red);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .footer-col p {
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-col a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary-red);
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #333;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+        }
+
+        /* Mobil Uyum (Responsive) */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            header { flex-direction: column; gap: 15px; }
+            .fab-call { bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü -->
+    <header>
+        <div class="logo">
+            <!-- Marley Döner Logosu -->
+            <a href="index.html">
+                <img src="images/IMG_0969.jpg" alt="Marley Döner Logo">
+            </a>
+        </div>
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="menu.html">Menü</a>
+            <a href="#iletisim">İletişim</a>
+        </nav>
+    </header>
+
+    <!-- Hero Bölümü (Açılış Ekranı) -->
+    <section class="hero">
+        <h1>Gerçek Döner Lezzeti</h1>
+        <p>Ateşin dansı, etin en lezzetli hali. Marley Döner'de efsanevi zurnalar ve özel dürümler seni bekliyor.</p>
+        <!-- Menüye Giden Yönlendirme Butonu (QR ve Site İçi Uyumlu) -->
+        <a href="menu.html" class="btn">Menüyü İncele & Sipariş Ver</a>
+    </section>
+
+    <!-- Öne Çıkan Lezzetler -->
+    <section class="featured">
+        <h2>Efsanelerimiz</h2>
+        <div class="cards">
+            <!-- Öne Çıkan Ürün 1 -->
+            <div class="card">
+                <img src="images/featured-zurna.jpg" alt="70 cm Zurna Dürüm">
+                <div class="card-content">
+                    <h3>70 cm Zurna Dürüm</h3>
+                    <p>Doyuruculuğun zirvesi. Özel sosumuz ve bol malzemesiyle açlığınızı tamamen bitirecek efsane lezzet.</p>
+                </div>
+            </div>
+            
+            <!-- Öne Çıkan Ürün 2 -->
+            <div class="card">
+                <img src="images/featured-ozel.jpg" alt="Marley Özel Dürüm">
+                <div class="card-content">
+                    <h3>Marley Özel Dürüm</h3>
+                    <p>Yanında patates kızartması, ayran, ezme ve sucuk ile birlikte gelen, imzamızı taşıyan eşsiz bir menü.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sabit Hızlı Ara Butonu -->
+    <a href="tel:+905413666341" class="fab-call" title="Hızlı Sipariş Hattı">
+        📞
+    </a>
+
+    <!-- Footer ve İletişim -->
+    <footer id="iletisim">
+        <div class="footer-col">
+            <h4>İletişim</h4>
+            <p><strong>Telefon:</strong> <a href="tel:+905413666341">0541 366 63 41</a></p>
+            <p><strong>Çalışma Saatleri:</strong> Her Gün Açık | Kapanış: 00:00</p>
+        </div>
+        
+        <div class="footer-col">
+            <h4>Adresimiz</h4>
+            <p>Battal Gazi Caddesi 100-104 Yakınında</p>
+            <p>41700 Darıca / Kocaeli</p>
+            <p><em>Hizmet Seçenekleri: Açık hava bölümü var</em></p>
+        </div>
+        
+        <div class="footer-col">
+            <h4>Hızlı Erişim</h4>
+            <p><a href="menu.html">QR Menü / Tüm Ürünler</a></p>
+            <p><a href="index.html">Ana Sayfa</a></p>
+        </div>
+        
+        <div class="footer-bottom">
+            &copy; 2026 Marley Döner. Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+</body>
+</html>
